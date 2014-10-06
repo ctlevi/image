@@ -300,6 +300,13 @@ impl<T: Primitive, P: Pixel<T>> ImageBuf<P> {
     pub fn into_vec(self) -> Vec<P> {
         self.pixels
     }
+
+    //TODO move to GenericImage trait and implement for other structs
+    pub fn get_pixel_row(&self, x: u32) -> &[P] {
+        let start = x * self.width;
+        let stop = start + self.width;
+        self.pixels.slice(start as uint, stop as uint)
+    }
 }
 
 impl<T: Primitive, P: Pixel<T> + Clone + Copy> GenericImage<P> for ImageBuf<P> {
